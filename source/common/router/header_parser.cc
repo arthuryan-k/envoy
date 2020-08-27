@@ -277,7 +277,7 @@ void HeaderParser::evaluateHeaders(Http::HeaderMap& headers,
 
   for (const auto& formatter : headers_to_add_) {
     const std::string value = formatter.second->format(stream_info);
-    if (!value.empty()) {
+    if (!value.empty() && Http::validHeaderString(value)) {
       if (formatter.second->append()) {
         headers.addReferenceKey(formatter.first, value);
       } else {
